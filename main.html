@@ -11,12 +11,12 @@
         }
 
         async function updateLocation() {
-            var newLocation = document.getElementById("newLocation").value;
-            var updateRequest = "/Update?location=" + newLocation;
+            let newLocation = document.getElementById("newLocation").value;
+            let updateRequest = "/Update?location=" + newLocation;
 
             console.log("Submitting request: " + updateRequest);
-            var resp = await fetch(updateRequest)
-            var respText = await resp.text();
+            let resp = await fetch(updateRequest)
+            let respText = await resp.text();
             console.log("Got response: " + respText);
             document.getElementById("newLocation").value = "";
             getStatus();
@@ -24,15 +24,31 @@
 
         async function getStatus() {
             console.log('Fetching Status');
-            var resp = await fetch("/GetData")
-            var respJSON = await resp.json();
-            var temp = respJSON.averageTemp;
-            var location = respJSON.location;
-            var time = respJSON.time;
+            let resp = await fetch("/GetData")
+            let respJSON = await resp.json();
+            let temp = respJSON.averageTemp;
+            let location = respJSON.location;
+            let time = respJSON.time;
+            let fan = respJSON.fan;
+
 
             document.getElementById("Temp").innerText = temp;
             document.getElementById("Time").innerText = time + " UTC";
             document.getElementById("Location").innerText = location;
+            if (fan == "On") {
+                document.getElementById("ToggleFan").innerText = "Turn Fan Off";
+            } else {
+                document.getElementById("ToggleFan").innerText = "Turn Fan On";
+            }
+        }
+
+        async function ToggleFan() {
+            let updateRequest = "/ToggleFan";
+            console.log("Submitting request: " + updateRequest);
+            let resp = await fetch(updateRequest)
+            let respText = await resp.text();
+            console.log("Got response: " + respText);
+            getStatus();
         }
 
     </script>
@@ -46,6 +62,8 @@
         Data Time: <span id="Time">yyyy-mm-dd xx:xx:xx</span>
     </p>
     Update Location: <input type="text" id="newLocation"></input><button onclick="updateLocation()"> save </button><BR>
+    <button id="ToggleFan" onclick="ToggleFan()"> Turn Fan </button><BR>
+
 </body>
 
 </html>

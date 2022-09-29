@@ -49,6 +49,9 @@ def setupServerBindings():
     newBinding = ServerBinding("GetData", getDataHandler)
     bindings.append(newBinding)
 
+    newBinding = ServerBinding("ToggleFan", toggleFanHandler)
+    bindings.append(newBinding)
+
     return bindings
 
 
@@ -88,14 +91,31 @@ def jsonResponseHandler(conn, object):
 
 
 def getDataHandler(conn, url, params):
+    global Fan_PWM
     print("Got Data url: %s and params: %s" % (str(url), str(params)))
     averageTemp = Temperature_Monitor.calculateAverageTemp()
+    fan_status = "On"
+    if Fan_PWM.duty() == 0:
+        fan_status = "Off"
+
     current_data_object = {
         "averageTemp": averageTemp,
         "location": Temperature_Monitor.location,
         "time": NTP_Controller.getISO8601TimeString(),
+        "fan": fan_status,
     }
     jsonResponseHandler(conn, current_data_object)
+
+
+def toggleFanHandler(conn, url, params):
+    global Fan_PWM
+    response_string = "OK"
+    print("Got toggle fan url: %s and params: %s" % (str(url), str(params)))
+    if Fan_PWM.duty() == 0:
+        Fan_PWM.duty(1023)
+    else:
+        Fan_PWM.duty(0)
+    Server.stdResponse(conn, "text/plain", response_string)
 
 
 startUp()
