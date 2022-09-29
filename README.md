@@ -28,6 +28,7 @@ This project is to build a fully remotely managed temperature monitoring station
  - Precision Screwdriver Set
  
 # Process:
+IMGUR ALBUM (https://imgur.com/a/B5jZx0X)<br/>
 1. 3D Print the enclosure, I used my Creality Ender 3 S1 Pro with a 0.4mm nozzel using eSun PLA+ White filament. There are 3 components in the STL file; a main body, a friction fit back cover and a holder for the piicoDev TMP 117.
 2. While the enclosure is printing setup the ESP8266 with micropython and setup WebREPL. 
 	(https://docs.micropython.org/en/latest/esp8266/tutorial/intro.html#intro)
