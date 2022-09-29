@@ -40,9 +40,11 @@ This project is to build a fully remotely managed temperature monitoring station
 		Yellow -> D1<br/>
 		Red -> 3.3v<br/>
 		Black -> Ground<br/>
+		<br/>
 	**Fan:**<br/>
 		Red -> 3.3v<br/>
 		Black -> Drain on N Channel Mosfet<br/>
+		<br/>
 	**Mosfet:**<br/>
 		Drain -> Black fan lead<br/>
 		Gate -> D6<br/>
