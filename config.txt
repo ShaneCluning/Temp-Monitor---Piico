@@ -1,4 +1,3 @@
 {
-    "location":"not set",
-    "tempOffset": 0
+    "location":"not set"
 }
